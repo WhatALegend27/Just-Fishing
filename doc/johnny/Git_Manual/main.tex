@@ -1,0 +1,730 @@
+\documentclass[12pt]{report}
+\usepackage[letterpaper, margin=1in]{geometry} % For margin setting and paper size
+\usepackage{graphicx} % Required for inserting images
+\usepackage{parskip} % Removes indents and adds spacing
+\usepackage[hyphens]{url} % Helps with URL formatting
+\usepackage[breaklinks=true]{hyperref} % Adds hyperlink support
+
+\begin{document}
+
+\input{titlepage}
+
+\tableofcontents
+\newpage
+% ---------- Introduction ---------- %
+
+\section{Introduction}
+
+\indent Git is a free and open source distributed version control system (DVCS) designed with efficiency in mind. It was created by Linus Torvalds in 2005 due to the needs of the Linux kernel development community. 
+
+Each Git project is known as a repository, or a repo, and stores the projects' files and complete change history.
+
+Today, it remains a crucial part of the software development industry. According to a StackOverflow survey from 2022, almost 97\% of all professional developers use Git for their DVCS. For this reason, it is critical that all Computer Science students learn how to use it.
+
+\subsection{What is a Distributed Version Control System?}
+A Version Control System (VCS) is an application that tracks changes within a team's code and stores a complete history of all changes made. This allows for easier experimentation and collaboration. It acts as a way of protecting a team's source code from irreparable damage.
+
+There are two most common types of Version Control Systems: Centralized and Distributed. A Centralized Version Control System (CVCS) has all files and repository history stored on a centralized server. A Distributed Version Control System (DVCS) has all files stored on all systems with access to the repository.
+
+One Centralized VCS is called Subversion, or SVN. If you're curious about it, you can read more at their website: \url{https://subversion.apache.org/}
+
+Distributed Version Control is like the democracy of Version Control Systems. Everyone has a complete history of the project on their side and can alter it as they see fit. It's a major reason why Git and other DVCS applications are so popular: they can be run by anybody on any computer without substantial cost.
+
+\subsection{What is GitHub?}
+GitHub is a website owned by Microsoft that was designed to work as a central hub for Git repositories. This adds a somewhat centralized element to the Distributed Version Control System that Git is. It helps streamline the collaboration process and provides a secure repository storage solution.
+
+It is not, however, affiliated with Git in any way. Git is the Version Control System, and GitHub is the centralized hub for the Version Control System.
+
+In fact, Git can be paired up with other web applications too, such as GitLab. GitLab offers its own features and, although less popular than GitHub, is a perfectly viable alternative to GitHub.
+
+\subsection{GitHub Desktop and GitHub CLI} 
+GitHub Desktop is a free and open source application developed by the GitHub team as a GUI replacement for Git. It is often considered a less powerful, albiet more beginner-friendly version of Git. However, it is not industry standard and, for that reason, will not be recommended for this class.
+
+GitHub CLI is a Git replacement CLI tool developed by the GitHub team as a way to bring GitHub into the terminal. It is designed as a way to pull GitHub features (like issues and pull requests) into the command line. It's not widely used, and although it pulls in many of the features of Git, it is not recommended due to it not being industry standard.
+
+Clive has personal experience being asked about Git commands during an interview.
+
+% ---------- Setting up Git ---------- %
+
+\section{Setting up Git}
+This section will focus on the basic installation and configuraiton of Git, as well as creating and working with your first repository
+
+\subsection{Installing Git}
+Git is available on Windows, MacOS, and practically every version of Linux. The following sections list recommended setup instructions for the three major operating systems:
+
+For \textbf{Windows},
+\begin{enumerate}
+    \item Download and run the Git installer from \url{https://git-scm.com/install}
+    \item Click \textbf{Next} to accept the GNU General Public License
+    \item Select an installation location or leave the default, then click \textbf{Next}
+    \item Leave the defaults in the component selection screen and click \textbf{Next}
+    \item Choose whether or not to create a Start Menu folder and click \textbf{Next}
+    \item Select your preferred text editor and click \textbf{Next}
+    \item Select \textit{Override the default branch name for new repositories} and type \verb|main| in the box, then click \textbf{Next}
+    \item Select \textit{Git from the command line and also from 3rd-party software} and click \textbf{Next}
+    \item Select \textit{Use bundled OpenSSH} and click \textbf{Next}
+    \item Select \textit{Use the OpenSSL library} and click \textbf{Next}
+    \item Click \textit{Checkout Windows-style, commit Unix-style line endings} and click \textbf{Next}
+    \item Choose your preferred console window (MinTTY is recommended) and click \textbf{Next}
+    \item Click \textit{Fast-forward or merge} and click \textbf{Next}
+    \item Click \textit{Git Credential Manager} and click \textbf{Next}
+    \item Check \textit{Enable file system caching} and click \textbf{Next}
+    \item Leave both experimental options unchecked and click \textbf{Install}
+    \item Click \textbf{Finish}
+\end{enumerate}
+
+For \textbf{MacOS},
+\begin{enumerate}
+    \item Install Homebrew if you don't already have it by opening a terminal and running\\
+    \verb|$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com|\\
+    \verb|  /Homebrew/install/HEAD/install.sh)"|
+    \item Run \verb|brew install git|
+\end{enumerate}
+
+For \textbf{Linux} run the corresponding terminal command:
+\begin{itemize}
+    \item \textbf{Debian/Ubuntu}: \verb|apt-get install git|
+    \item \textbf{Fedora 22 and newer}: \verb|yum install git|
+    \item \textbf{Fedora 21 and older}: \verb|dnf install git|
+    \item \textbf{Gentoo}: \verb|emerge --ask --verbose dev-vcs/git|
+    \item \textbf{Arch Linux}: \verb|pacman -S git|
+    \item \textbf{openSUSE}: \verb|zypper install git|
+    \item \textbf{Mageia}: \verb|urpmi git|
+    \item \textbf{Nix/NixOS}: \verb|nix-env -i git|
+    \item \textbf{FreeBSD}: \verb|pkg install git|
+    \item \textbf{Solaris 9/10/11}: \verb|pkgutil -i git|
+    \item \textbf{Solaris 11 Express, OpenIndiana}: \verb|pkg install developer/versioning/git|
+    \item \textbf{OpenBSD}: \verb|pkg_add git|
+    \item \textbf{Alpine}: \verb|apk add git|
+    \item \textbf{Slitaz}: \verb|tazpkg get-install git|
+\end{itemize}
+
+Git can also be built from source. This is typically not recommended and is typically only needed if you are running a Linux distribution without a package manager or without a prebuilt Git package. Instructions can be found in the \verb|README| file found at \url{https://github.com/git/git}
+
+\newpage
+
+\subsection{Initial Setup}
+For Git to fully integrate with GitHub, we must perform some initial setup.
+
+First, set your username and email with the \verb|git config| command...
+\begin{verbatim}
+    git config --global user.name = "JoeVandal20"
+    git config --global user.email = "jvandal@uidaho.edu
+\end{verbatim}
+...where \verb|user.name| is the username you use for GitHub and \verb|user.email| is the email you use for GitHub.
+
+\subsubsection{Additional Configuration for HTTPS Authentication}
+If you are authenticating to Git with HTTPS, also set Git to use the Git Credential Helper:
+\begin{verbatim}
+    git config --global credential.helper cache
+\end{verbatim}
+You can also set a custom cache timeout, as the default is 15 minutes before needing to reauthenticate. Do this by providing a timeout value in seconds:
+\begin{verbatim}
+    git config --global credential.helper 'cache --timeout=3600'
+\end{verbatim}
+For more information on authentication, read the next section
+
+\subsection{Cloning and Authentication}
+There are two main methods you can use to clone into a Git repository stored on GitHub: HTTPS or SSH. There are benefits and drawbacks to each method, as well as varying levels of complexity.
+
+There is also Git Credential Manager, which will not be covered due to uncertainty in its development. Information on GCM can be found at its GitHub repository:\\ \url{https://github.com/git-ecosystem/git-credential-manager}
+
+\subsubsection{HTTPS Authentication}
+Using Git with HTTPS involves authenticating with your username and password each time you push/pull. It is simple to set up and requires no additional software, but is \textbf{extremely insecure}. Git stores your password as plaintext, meaning that anybody can see it at any time so long as they can access your \verb|.gitconfig| file. It is possible to use a Personal Access Token generated by GitHub as a substitute, but this still allows anybody with access to your system access to your main repository. It is usually a better idea to use SSH authentication if possible.
+
+However, if this is not possible for you, here are the instructions for use:
+\begin{enumerate}
+    \item Generate a Personal Access Token by first going to \url{https://github.com/settings/tokens}. For the purpose of this course, select \textit{Generate new token (classic)} as the newer token type does not work for repositories you do not own. Give it a name, set the expiration, and give it at least the \textit{repo} scope. You may give it a greater scope if you wish.
+    \item Once created, copy your personal access token. It should look something like:\\
+    \verb|ghp_ABCD123XXXXXXXXXXXXXXXXXXXXXXXX|
+    \item Clone your repository using the \verb|git clone| command:\\
+    \verb|git clone https://github.com/username/repository-name.git|
+    \item When Git asks for a password, use your Personal Access Token
+\end{enumerate}
+It is recommended to use a password manager to store and manage your Personal Access Token (However, 1Password has a custom SSH client that works wonderfully with GitHub).
+
+\subsubsection{SSH Authentication}
+Using Git with SSH involves authenticating using public key cryptography. It's more complicated to set up, but is extremely reliable and incredibly secure. It is also widely considered the industry standard.
+
+Configuring SSH for Git is slightly different on Windows as it is for MacOS and Linux. Make sure to follow the proper set.
+
+To generate your SSH keypair:
+For \textbf{Linux and MacOS} use Bash or Zsh,
+\begin{enumerate}
+    \item Generate a SSH keypair using:\\
+    \verb|ssh-keygen -t ed25519 -C "your_email@example.com"|\\
+    Press Enter to accept the default file location (or set a custom one if you wish) and then enter a secure passphrase for added security if you'd like.
+    \item Start the SSH agent with \verb|eval "$(ssh-agent -s)"|
+    \item Add your SSH key to the SSH agent with \verb|ssh-add PATH_TO_KEY/id_ed25519|\\ 
+    By default, \verb|PATH_TO_KEY| is \verb|~/.ssh/|, so you would run the following command:\\
+    \verb|ssh-add ~/.ssh/id_ed25519|
+    \item Copy your public key to your clipboard. This works best by running\\
+    \verb|cat PATH_TO_KEY/id_ed25519.pub| and copying the output.
+\end{enumerate}
+
+For \textbf{Windows} use PowerShell,
+\begin{enumerate}
+    \item Generate a SSH keypair using:\\
+    \verb|ssh-keygen -t ed25519 -C "your_email@example.com"|\\
+    Press Enter to accept the default file location (or set a custom one if you wish) and then enter a secure passphrase for added security if you'd like.
+    \item Run PowerShell as an administrator and run the following commands to start the SSH agent and configure it to start automatically:
+    \begin{verbatim}
+        Get-Service -Name ssh-agent | Set-Service -StartupType Automatic
+        Start-Service ssh-agent
+    \end{verbatim}
+    \item Add your SSH key to the SSH agent with \verb|ssh-add PATH_TO_KEY\id_ed25519|\\ 
+    By default, \verb|PATH_TO_KEY| is \verb|C:\Users\YourUsername\.ssh\id_ed25519|, so you would run the following command:\\
+    \verb|ssh-add C:\Users\YourUsername\.ssh\id_ed25519|
+    \item Copy your public key (the entire contents of the id\_ed25519.pub file)to your clipboard. This works best by running 
+    \begin{verbatim}
+        Get-Content PATH_TO_KEY/id_ed25519.pub | Set-Clipboard
+    \end{verbatim}
+\end{enumerate}
+
+To add the key to GitHub,
+\begin{enumerate}
+    \item Log into GitHub
+    \item Click your profile photo in the upper-right corner and select \textbf{Settings}
+    \item On the left, select \textbf{SSH and GPG keys}
+    \item Click the \textbf{New SSH key} button
+    \item Give it a name
+    \item Set key type of \textit{Authentication Key}
+    \item Paste your key into the text box
+    \item Click \textbf{Add SSH key}
+\end{enumerate}
+
+To test that the SSH keypair was set up successfully, run \verb|ssh -T git@github.com|
+
+\subsubsection{Cloning}
+Once you are set up with either HTTPS or SSH authentication you can clone your project using one of the following commands:
+\begin{itemize}
+    \item HTTPS: \verb|git clone https://github.com/Username/RepoName.git|
+    \item SSH: \verb|git clone git@github.com:Username/RepoName.git|
+\end{itemize}
+
+\subsection{Initializing a Repository}
+Before initializing your repository, it's recommended to set the default branch name (if you did not do so during installation) to "main", which is the current industry default. To do this, run 
+\verb|git config --global init.defaultBranch main|
+
+To initialize a repository, open your terminal and navigate to your project directory with \verb|cd|. Then, initialize the repository using \verb|git init|. You can check the status of the repository with \verb|git status|. Then, run \verb|git add .| to stage all files for an initial commit and \verb|git commit -m "Initial commit"| to commit the initial changes. These commands will be discussed in more detail in a later section.
+
+Finally, add the remote destination with:
+\begin{itemize}
+    \item HTTPS: \verb|git remote add origin https://github.com/Username/RepoName.git|
+    \item SSH: \verb|git remote add origin git@github.com:Username/RepoName.git|
+\end{itemize}
+
+Some find it easier to create a repository on GitHub and then clone it using \verb|git clone|. 
+
+
+\subsection{Initial Files}
+There are three initial files all public repositories should have:
+\subsubsection{README.md}
+A \verb|README.md| file contains information about your project, such as what it is, contributors, its purpose, compatibility, and whatever else may be relevant to a user. It is typically formatted in Markdown, denoted by the \verb|.md| file extension. Markdown formatting follows an easy to understand but powerful syntax. Information on Markdown syntax can be found at \url{https://www.markdownguide.org/basic-syntax/}
+\subsubsection{.gitignore}
+A \verb|.gitignore| file specifies a list of files, file types, and directories that Git should ignore. For example, adding \verb|foo.txt| to a repo's \verb|.gitignore| would prevent any files called \verb|foo.txt| from being tracked by Git. Documentation on the intricacies of the \verb|.gitignore| file can be found at Git's website: \url{https://git-scm.com/docs/gitignore}
+
+It is generally good practice to add the following lines to your \verb|.gitignore| to prevent personal config files from being tracked:
+\begin{verbatim}
+    *.dSYM
+    *.DS_Store
+    *.vsconfig
+    .vscode/
+\end{verbatim}
+
+You can find a template\verb|.gitignore| specifically for Unity projects here:\\
+\url{https://github.com/github/gitignore/blob/main/Unity.gitignore}
+
+\subsubsection{LICENSE}
+The \verb|LICENSE| file contains the copyright license the project is published with. A copyright license is important because it allows you to decide what you want with your code.
+
+The developers of GitHub created \url{https://choosealicense.com} to assist project leaders in choosing a license. 
+
+\subsection{Git LFS}
+Git, by nature, is not designed to work with extremely large files. Because of this, some projects with many large files (such as a video game with sprites and audio) are slow or even completely incompatible with base Git. To mitigate this, Git LFS was created. It works by storing the main file on an external server (such as GitHub) and storing a pointer to it inside Git.
+
+On Windows, Git LFS should already be downloaded. To initialize it, run \verb|git lfs install|. This only has to be done once per user account.
+
+On MacOS, use Homebrew to install Git LFS with \verb|brew install git-lfs| and then run \verb|git lfs install|
+
+On Linux, go to \url{https://git-lfs.com/} and install using the provided PackageCloud link. Then run \verb|git lfs install|
+
+To get Git LFS to properly track files, create a \verb|.gitattributes| file. A Unity-specific \verb|.gitattributes| file template can be found here:\\
+\url{https://github.com/gitattributes/gitattributes/} 
+
+To add a filetype to the .gitattributes, the file can be edited directly or you can run \verb|git lfs track "*.FILETYPE"|
+
+% ---------- Git Basics ---------- %
+\section{Git Basics}
+To call Git from the command line, you start with the \verb|git| command, followed by what you want to do. 
+
+An essential command to learn is \verb|git status|. The output from this command shows the current status of the Git working tree:
+\textbf{Example:}
+\begin{verbatim}
+    $git status
+    On branch main
+    Nothing to commit, working tree clean
+\end{verbatim}
+\textbf{Example:}
+\begin{verbatim}
+    $touch foo.c
+    $git status
+    On branch main
+    Your branch is up to date with 'origin/main'
+    
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+            foo.c
+\end{verbatim}
+
+The following sections will showcase some of the most important Git commands. For more information on a specific command, you can find Git's documentation at \url{https://git-scm.com/docs}
+
+\subsection{Staging Changes}
+To add changes to Git, you must first stage them. This is done with the \verb|git add| command. For example, if you made changes to a file called \verb|foo.py|, you would stage it using \verb|git add foo.py|. You can then check the status of the repo with \verb|git status|
+
+Some helpful tips and things to know for staging:
+\begin{itemize}
+    \item Git handles pathnames relative to the parent directory of your repository.
+    \item Use \verb|git restore --staged| to remove a file from staging.
+    \item Use \verb|git add .| or \verb|git add --all| to add all files to staging.
+\end{itemize}
+
+\subsection{Commits}
+Once files are properly staged, the changes must be confirmed by Git. This is known as a commit, or committing your changes. This can be done with \verb|git commit|.
+
+It is generally best practice to provide a descriptive message alongside your commit, and you will be hard pressed to get Git or GitHub to accept a commit without a message. There are two ways to do this 
+
+\subsubsection{Using the -m flag}
+The \verb|-m| flag (\verb|git commit -m|) is easy, versatile, and best for writing short commit messages. For example:
+    \verb|git commit -m "Fix the HTTPS error"|
+There are many instances in which you will want to be more descriptive. Using a second \verb|-m| flag will essentially create a body/description for your commit:
+\begin{verbatim}
+    git commit -m "Fix the HTTPS error" -m "Users were unable to establish a 
+    secure connection with various endpoints. This was caused by an expired 
+    certificate and an accidentally hardcoded HTTP request. The fix removes 
+    that hardcoded HTTP request and replaces the expired certificate."
+\end{verbatim}
+However, this is a bit difficult to type out on a terminal. So, many people instead opt to use a Git Editor.
+
+\subsubsection{Using the Git Editor}
+The Git Editor can be used to set the editor that Git will automatically open when a \verb|git commit| is run \textit{without} a message. By default, it is typically Vi, Vim, or Nano. This can be overwritten with a \verb|git config|:
+
+\verb|git config --globl core.editor <PATH-TO-EDITOR> <FLAGS>|
+\begin{itemize}
+    \item \verb|git config|: The command
+    \item \verb|--global|: Makes the change work for all repositories
+    \item \verb|core.editor|: The value being changed
+    \item \verb|<PATH-TO-EDITOR>|: Needs to be set to either the full filepath or, if the application has been added to the system PATH variable, that can be used as well.
+    \item \verb|<FLAGS>|: Many (typically GUI-based) editors require the \verb|--wait| flag so Git knows to wait until the file has been saved for it to finalize the commit message.
+\end{itemize}
+
+Some example commands are:
+\begin{itemize}
+    \item \verb|git config --global core.editor "code --wait"|
+    \item \verb|git config --global core.editor "atom --wait"|
+    \item \verb|git config --global core.editor "'C:\Program Files\Notepad++\|\\\verb|notepad++.exe' -multiInst -nosession -notabbar"|
+    \item \verb|git config --global core.editor "vim"|
+    \item \verb|git config --global core.editor "nano"|
+\end{itemize}
+
+\subsubsection{Commit Message Best Practices}
+The most commonly accepted rules / conventions on how to write a git commit message are as follows:
+\begin{enumerate}
+    \item Limit the subject line to 50 characters
+    \item Capitalize only the first letter in the subject line
+    \item Don't put a period at the end of the subject line
+    \item Use the imperative mood
+    \item Describe the what and the why, but not the how
+\end{enumerate}
+
+\subsubsection{What is the Imperative Mood?}
+The imperative mood is an English language contention that is used to give commands and requests to people. To tell if you are using the imperative mood, try prepending "If applied, this commit will" to your commit message and seeing if it's grammatically correct. For example:
+\begin{itemize}
+    \item "Fixing the HTTPS error" \\
+    "If applied, this commit will fixing the HTTPS error"
+    \item "Fixed the HTTPS error" \\
+    "If applied, this commit will fixed the HTTPS error"
+    \item "Fix the HTTPS error" \\
+    "If applied, this commit will fix the HTTPS error"
+\end{itemize}
+Since the third message is grammatically correct, it is in the imperative mood.
+
+\subsubsection{What if My Team Doesn't Want to Use the Conventions?}
+Then don't. They are conventions, not steadfast regulations. The conventions are general best practices and guidelines, but what's most important is to find and use a system that works for you and your team.
+
+\subsection{Pushing and Pulling Changes}
+When changes are committed, they are not automatically stored remotely on GitHub, Gitlab, or wherever else your repository is stored if it's remote. They are instead stored locally on your system until they are pushed to the remote source. This can be done with the use of the \verb|git push| command, though there are some things to note about this command.
+
+A more descriptive syntax of the \verb|git push| command is \verb|git push <remote> <branch>|. This is important to understand for use with branches, which will be explained later.
+
+\textbf{Do not use} \verb|git pull --force| \textbf{unless you know what you are doing. This can and will break things.}
+
+When changes are committed to the remote by other users (or by yourself on a different machine), they aren't downloaded to your local repository until you tell Git to grab them using \verb|git pull|. When this is run, remote changes are synced with local changes and everything is updated.
+
+If you are working on a branch, run \verb|git pull origin main| often to keep merge conflicts small
+
+\subsection{Creating a Branch}
+A branch is a separate working track that can be used to make changes without affecting the main codebase. Once completed, the code can be merged back into the main codebase.
+
+Every Git repository has a main or master branch. The standard for this branch is to be named "main" and it will be referred to as such for the duration of this manual.
+
+To create a new branch, run \verb|git branch <branch-name>| and then checkout the branch with \verb|git checkout <branch-name>|. You can combine these commands with\\ \verb|git checkout -b <branch-name>|.
+
+You can then work on the branch as you normally would.
+
+Changes on the branch can be pushed to the remote server using\\ \verb|git push origin <branch-name>|.
+
+A basic sample workflow would be:
+\begin{verbatim}
+    git pull origin main
+    git branch test-feature
+    git checkout test-feature
+    git add .
+    git commit -m "Worked on feature"
+    git push origin test-feature
+\end{verbatim}
+
+\subsubsection{Private Branches}
+A private branch is a branch that you create and use locally on your own machine \textit{without pushing to remote}. There are several reasons why you shouldn't use them and several instances in which it's acceptable to use them.
+
+For this course, it is highly discouraged for the following reasons:
+\begin{itemize}
+    \item It can isolate your work and drift away from the main branch, creating a mess of merge conflicts when it's eventually merged into main.
+    \item It reduces visibility and might cause teammates to accidentally duplicate work because they don't know you've started it.
+    \item There's no backup of your work in case something happens to your machine (loss, theft, damage, data corruption, etc)
+\end{itemize}
+
+Instead, push your branch to the remote even if you're the only one working on it, and merge your branches back into main often.
+
+\subsection{Merging Branches}
+Merging a branch in Git takes the history and changes from one branch and integrates them into another branch, typically main. The standard workflow for branches is:
+\begin{enumerate}
+    \item Switch to the target branch:\\
+    \verb|git checkout main|
+    \item Update your local target branch:\\
+    \verb|git pull origin main|
+    \item Merge the branch:\\
+    \verb|git merge branch-name|
+\end{enumerate}
+
+However, do note that you will rarely run \verb|git merge| on your own machine to update main. Instead, you will push your branch to remote and open a pull request. This will allow your team to discuss and review the code, then merge the code once it's been accepted by the team.
+
+\newpage
+
+\subsection{Resolving Merge Conflicts}
+Sometimes, when pushing to or pulling from remote, or when merging branches, there is a marge conflict. Typically this means that a file was modified by multiple different people. When this happens, Git marks the file like this:
+\begin{verbatim}
+    <<<<<<< HEAD
+    My new code
+    =======
+    The code my teammate pushed earlier
+    >>>>>>> main
+\end{verbatim}
+To resolve the conflict, simply delete the markers and the version of the code you don't want, then stage and commit the change. If you are having trouble, sometimes it can be helpful to speak to the teammate(s) who wrote the conflicting change to find the best solution.
+
+% ---------- Basic Workflow ---------- %
+
+\section{Basic Workflow}
+This section contains the basic workflow, from start to merge, using a real repository. You can find the final repository at \url{https://github.com/WhatALegend27/git-manual}
+\begin{verbatim}
+~/./repo$ git init
+Initialized empty Git repository in .././repo/.git/
+
+~/./repo$ touch README.md LICENSE .gitignore .gitattributes
+~/./repo$ git status
+On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .gitattributes
+        .gitignore
+        LICENSE
+        README.md
+nothing added to commit but untracked files present (use "git add" to track)
+
+~/./repo$ git add .
+~/./repo$ git status
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   .gitattributes
+        new file:   .gitignore
+        new file:   LICENSE
+        new file:   README.md
+
+~/./repo$ git commit -m "Initial commit"
+[main (root-commit) ee0f2ce] Initial commit
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 .gitattributes
+ create mode 100644 .gitignore
+ create mode 100644 LICENSE
+ create mode 100644 README.md
+ 
+ ~/./repo$ git remote add origin git@github.com:WhatALegend27/git-manual.git
+ ~/./repo$ git push -u origin main
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 472 bytes | 472.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To github.com:WhatALegend27/git-manual.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+~/./repo$ git branch write-readme
+~/./repo$ git checkout write-readme
+Switched to branch 'write-readme'
+
+~/./repo$ echo "# Git Manual Repo for CS3383" >> README.md
+~/./repo$ echo "*.dSYM" >> .gitignore
+~/./repo$ echo "*DS_Store" >> .gitignore
+~/./repo$ git add .
+~/./repo$ git status
+On branch write-readme
+Changes to be committed:
+  (use: "git restore --staged <file>..." to unstage)
+         modified:   .gitignore
+         modified:   README.md
+
+~/./repo$ git commit -m "Edited readme and added macOS junk to .gitignore"
+[write-readme 4a15d57] Edited readme and added macOS junk to .gitignore
+2 files changed, 3 insertions(+)
+
+~/./repo$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+~/./repo$ git merge write-readme
+Updating ee0f2ce..4a15d57
+Fast-forward
+ .gitignore | 2 ++
+ README.md  | 1 +
+ 2 files changed, 3 insertions(+)
+
+~/./repo$ git branch -d write-readme
+Deleted branch write-readme (was 4a15d57)
+
+~/./repo$ git push
+Enumerating objects: 7, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), 587 bytes | 587.00 KiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:WhatALegend27/git-manual.git
+   ee0f2ce..4a15d57  main -> main
+\end{verbatim}
+
+
+% ---------- Disaster Recovery ---------- %
+
+\section{Disaster Recovery}
+It is difficult to truely break Git. However, things happen and sometimes data gets lost or overritten. Thankfully, there are ways to fix this:
+
+\subsection{Reflog and Reset}
+If you accidentally delete a branch or a significant amount of work gets wiped out, you can use \verb|git reflog| to see a log of previous changes and restore them.
+
+For example, running \verb|git reflog| on my git-manual repository shows the following changes:
+\begin{verbatim}
+    4a15d57 (HEAD -> main, origin/main) HEAD@{0}: merge write-readme...
+    ee0f2ce HEAD@{1}: checkout: moving from write-readme to main
+    4a15d57 (HEAD -> main, origin/main) HEAD@{2}: commit: Edited readme....
+    ee0f2ce HEAD@{3}: checkout: moving from main to write-readme
+    ee0f2ce HEAD@{4}: commit (initial): Initial commit
+\end{verbatim}
+Each change is denoted with a specific hash. For example, the initial commit is \verb|ee0f2ce|.
+
+I can then use \verb|git reset --hard <hash>| to change back to this previous state. Note that the \verb|--hard| flag will overwrite any unsaved changes so make sure your working directory is clean first. For example, \verb|git reset --hard ee0f2ce| will restore me to the state it was after the initial commit.
+
+\subsection{Abort}
+Sometimes a command fails, or you begin a merge and there are a ton of merge conflicts. To return to exactly where you were before you started, you can run the command again with the \verb|--abort| flag. For example, to abort a merge: \verb|git merge --abort|.
+
+\subsection{Restoration of Deleted Files}
+If you accidentally deleted a file and have \textit{not} committed the deletion yet, you can restore the deleted file with \verb|git restore <filename>|.
+
+If you have committed the deletion and want it back, you can use \verb|git log -- <filename>| to find the commit hash where the file last existed and restore it with\\ \verb|git checkout <commit-hash> -- <filename>|.
+
+For example, I added a file \verb|important.cs| to my repo, committed the change, and deleted the file. I now want to restore it:
+
+\textbf{First,} I check the log:
+\begin{verbatim}
+~/./repo$ git log -- important.cs
+commit 0352b69bed338c463e2cdace932c9bbdd06d04ed (HEAD -> main, origin/main)
+Author: WhatALegend27 <jvanv06@gmail.com>
+Date:   Mon Feb 9 22:21:51 2026 -0800
+
+    Deleted unimportant file
+    
+    Probably won't need it later
+
+commit bf7cd81f2e857058832bd4f2600448f9977d1285
+Author: WhatALegend27 <jvanv06@gmail.com>
+Date:   Mon Feb 9 22:21:13 2026 -0800
+
+    This is really important
+    
+    Seriously. We need this
+\end{verbatim}
+
+\newpage
+
+\textbf{Then,} I restore the file using the most recent commit where it existed. The hash for this is \verb|bf7cd81f2e857058832bd4f2600448f9977d1285|. Note that the slash after \verb|git checkout| is for readability and is not needed.
+\begin{verbatim}
+~/./repo$ git checkout\
+            bf7cd81f2e857058832bd4f2600448f9977d1285 -- important.cs
+~/./repo$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   important.cs
+
+~/./repo$ git commit -m "Phew, thought we lost it"
+\end{verbatim}
+
+\subsection{Undoing Commits}
+You can undo the last commit with \verb|git reset|.
+
+\verb|git reset --soft HEAD~1| will undo the commit but keep changes staged. This is good for fixing typos or minor details.
+
+\verb|git reset --hard HEAD~1| will undo the commit and delete all changes.
+
+\subsection{Re-Cloning the Repository}
+If the local repository becomes so corrupted or confusing that nothing works, you can always re-clone the repository. It's typically a good idea to move the broken folder to a backup folder, then re-clone inside a new folder and manually copy over any files that weren't pushed yet.
+
+
+% ---------- Best Practices ---------- %
+
+\section{Tips and Tricks}
+    \begin{itemize}
+        \item Use SSH for authentication, as it is powerful, secure, and reliable
+        \item Use descriptive commit messages
+        \item If you are working on a branch, run \verb|git pull origin main| often to keep merge conflicts small
+        \item Avoid private branches
+        \item Avoid working on \verb|main| unless necessary
+        \item NEVER use \verb|git push --force|
+        \item NEVER use the \verb|--force| flag
+        \item When dealing with a merge conflict, sometimes it's good to talk to your teammates
+    \end{itemize}
+% ---------- GitHub Features ---------- %
+\section{GitHub}
+Although GitHub was designed primarily as a place to remotely store and access Git repositories, it comes with a plethora of features to make development easier.
+
+\subsection{Issues}
+The issues section is a tab within your repository that users can use to report issues with your code, recommend features, or provide feedback. Although not incredibly useful on small class projects, they can be crucial for bug fixing and reports for larger projects. For example, the GitHub repository for Vim has over 1,600 open issues and 7,700 closed issues as of the time of writing.
+
+\subsection{Pull Requests}
+The pull requests section is a tab within your repository that code contributors can use to help streamline the merging of a branch into main. It allows a team to look at code and find bugs, ensure adherence to the team's style guide, and share knowledge.
+
+Git repositories can also connect to tools that tests the code when a pull request is made. It ensures that the code in main is, most likely, operational at all times.
+
+\subsection{Releases}
+The releases section is a tab within your repository that you can use to publish finished builds of your code. It allows you to keep a complete version history of finished products without having to manage them within the repository itself.
+
+With releases, you can keep the source code within the repository and finished builds within a completely different section. This keeps codebases smaller and easier to use and manage as a team.
+
+% ---------- Glossary ---------- %
+
+\newpage
+
+\section{Glossary}
+
+\subsection{Terminology}
+\textbf{Branch:} A separate section of code to be worked on by a contributor. Typically meant for adding a feature or fixing a bug.
+
+\textbf{Codebase:} A collection of source code.
+
+\textbf{Commit (Noun):} A snapshot of the source code containing staged changes.
+
+\textbf{Commit (Verb):} Taking a snapshot of the source code.
+
+\textbf{HEAD:} A pointer to the most recent changes within a repository.
+
+\textbf{Origin:} The address of a remote repository.
+
+\textbf{Pull Request:} A feature on GitHub that allows a team to review a merge before it is completed.
+
+\textbf{Remote:} A repository which you can push changes into and pull changes out of.
+
+\textbf{Repository/Repo:} A collection of files tracked and secured by Git.
+
+\textbf{Stage:} A list of files that will be committed.
+
+\textbf{Working Tree:} All the files and folders within a Git repository excluding the .git folder.
+
+\subsection{Commands}
+\verb|git add|: Used to add a file/directory to the staging area. All files can be added with\\ \verb|git add .| or \verb|git add --all|.
+
+\verb|git branch|: Used to create a new branch.
+
+\verb|git checkout|: Used to switch to a different branch. Can also be used to restore deleted files. Can create a new branch using \verb|git checkout -b <branch-name>|.
+
+\verb|git clone|: Used to clone a remote repository.
+
+\verb|git commit|: Used to create a commit. The \verb|-m| flag can be used to add a message. Omitting the \verb|-m| flag will open the Git Editor.
+
+\verb|git config|: Used to configure Git settings.
+
+\verb|git init|: Initializes a new repository.
+
+\verb|git log|: Shows a log of all previous commits.
+
+\verb|git merge|: Merges two branches together.
+
+\verb|git pull|: Pulls remote changes to the local repository.
+
+\verb|git push|: Pushes local changes to the remote repository.
+
+\verb|git reflog|: Shows a log of all times the Git HEAD has moved, which happens with every change even if it's not a commit.
+
+\verb|git reset|: Resets changes to a previous commit relative to the position of HEAD.
+
+\verb|git restore|: Restores a deleted file.
+
+\verb|git status|: Used to see the current status of the working tree.
+
+% ---------- References ----------
+
+\newpage
+
+\section{References}
+
+\hangindent=20pt
+Ali, A. (2025, July 13). \textit{Imperative mood in English with Examples}. Englishan. \url{https://englishan.com/imperative-mood/}
+
+\hangindent=20pt
+\textit{Apache Subversion}. (n.d.). \url{https://subversion.apache.org/}
+
+\hangindent=20pt
+Cameron McKenzie. (2024, September 25). \textit{How to Write a Git Commit Message: Conventions \& Best Practices} [Video]. YouTube. \url{https://www.youtube.com/watch?v=9ilpKtF0KGQ}
+
+\hangindent=20pt
+\textit{Getting Started - A Short History of Git}. (n.d.). Git. \url{https://git-scm.com/book/en/v2/Getting-Started-A-Short-History-of-Git}
+
+\hangindent=20pt
+\textit{Git Ignore and .gitignore}. (n.d.). W3Schools. \url{https://www.w3schools.com/git/git_ignore.asp}
+
+\hangindent=20pt
+\textit{Keeping your account and data secure}. (n.d.). GitHub Docs. \url{https://docs.github.com/en/authentication/keeping-your-account-and-data-secure}
+
+\hangindent=20pt
+Olawanle, J. (2022, August 8). \textit{How to set up Git for the first time on MacOS}. freeCodeCamp. \url{https://www.freecodecamp.org/news/setup-git-on-mac/}
+
+\hangindent=20pt
+Sharma, R. (2025, July 23). \textit{How to use HTTPS or SSH for Git?} GeeksforGeeks. \url{https://www.geeksforgeeks.org/git/how-to-use-https-or-ssh-for-git/}
+
+\hangindent=20pt
+\textit{Stack Overflow Developer Survey 2022}. (2022, May). Stack Overflow. \url{https://survey.stackoverflow.co/2022/}
+
+\hangindent=20pt
+\textit{What is version control?} (n.d.). GitLab. \url{https://about.gitlab.com/topics/version-control/}
+
+\end{document}
