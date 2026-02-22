@@ -1,0 +1,117 @@
+include RandomNumberGenerator as RNG;
+
+string DetermineWeather()
+{
+	LIST string possible_weather =
+		{"clear", "rainy", "stormy", "cloudy"};
+	
+	float weatherValue = RNG.GenerateNumber(float, 0.00, 1.00);
+	if (weatherValue < 0.10)
+		return "stormy"
+	else if (weatherValue < 0.30)
+		return "rainy"
+	else if (weatherValue < 0.60)
+		return "cloudy"
+	else
+		return "clear"
+}
+
+void SetWeatherSigns(current_weather, light_level)
+{
+	Scene.SetBackground(current_weather, light_level);
+	Scene.PlayAudio(current_weather);
+}
+
+float GenerateGlobalDifficulty(current_weather, time_of_day, player_difficulty)
+{
+	float global_difficulty = 1.0;
+	float time_difficulty = 1.0;
+
+	DICT weather_difficulties = {
+		"stormy": 2.0
+		"rainy": 1.5
+		"cloudy": 1.0
+		"clear": 0.75
+	}
+
+	DICT player_difficulties = {
+		"casual": 1.0
+		"hard": 2.0
+		"drbc": 0.0
+	};
+	
+	# In 24 hour time
+	if (time_of_day >= 20 or time_of_day < 6)
+		time_difficulty = 2.0;
+	
+	global_difficulty = 
+		weather_difficulties[current_weather] + 
+		player_difficulties[player_difficulty] + 
+		time_difficulty +
+		RNG.GenerateNumber(float, 0.00, 0.25);
+
+	return global_difficulty
+
+}
+
+TerrainObject GenerateTerrain(boat_position, global_difficulty)
+{
+	int min_rocks = 0;
+	int max_rocks = global_difficulty * 10;
+	int num_rocks = min_rocks;
+
+	DICT locations = {
+		north_sea: 2
+		south_sea: 3
+		shallow_sea: 1
+		deep_sea: 4
+	}
+
+	int highest_num_rocks = num_rocks;
+	for (locations[boat_position])
+	{
+		do:
+			num_rocks = RNG.GenerateNumber(int, min_rocks, max_rocks);
+		until: 
+			num_rocks > highest_num_rocks;
+
+		highest_num_rocks = num_rocks;
+	}
+
+	ARRAY TerrainObject rocks[num_rocks];
+	for (rock in rocks)
+	{
+		int new_rock_location[2] = (0,0)
+		
+		do:
+			new_rock_x = RNG.GenerateNumber(signed float, -20, 20);
+			new_rock_y = RNG.GenerateNumber(signed float, -20, 20);
+			new_rock_location = (new_rock_x, new_rock_y);
+		until:
+			new_rock_ not in rock_locations;
+
+		rock_locations[rock].rock_location = new_rock_location;
+	}
+
+	return rocks;
+}
+
+when boat.IsActive BECOMES true
+{
+	string current_weather = DetermineWeather();
+	SetWeatherSigns(current_weather, day.game_clock.GetCurrentTime());
+
+	float global_difficulty = GenerateGlobalDifficulty(current_weather, day.game_clock.GetCurrentTime(), toolbox.difficulty);
+	TerrainObject OceanRocks = GenerateTerrain(toolbox.boat_position, global_difficulty);
+}
+
+while boat.IsActive
+{
+	wait(15 minutes); # In-game time
+	boat.position += (RNG.GenerateNumber(signed float, -2, 2), RNG.GenerateNumber(signed float, -2, 2));
+	if boat.position in OceanRocks
+	{
+		boat.Destroy();
+		player.LoseGame();
+	}
+}
