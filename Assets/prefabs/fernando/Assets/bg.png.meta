@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bebeb612877ce464f97623892a08451c
+guid: f787426c54391447e88f4faef8b4b1cb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1915776564401465818
-    second: Fish_0
+      213: -4364034832326165938
+    second: bg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fish_0
+      name: bg_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2816
-        height: 1536
+        width: 2744
+        height: 1568
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 62615d96d5bc965e0800000000000000
-      internalID: -1915776564401465818
+      spriteID: e4a74cf0175df63c0800000000000000
+      internalID: -4364034832326165938
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Fish_0: -1915776564401465818
+      bg_0: -4364034832326165938
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
